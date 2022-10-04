@@ -1,4 +1,16 @@
-html,
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .card {
+  @apply mb-5  block   rounded-lg border border-gray-200  shadow-md;
+}
+
+.primary-button {
+  @apply rounded bg-teal-300 py-2 px-4 shadow outline-none hover:bg-teal-400  active:bg-teal-500;
+} */
+
+/* html,
 body {
   padding: 0;
   margin: 0;
@@ -23,4 +35,4 @@ a {
     color: white;
     background: black;
   }
-}
+} */
