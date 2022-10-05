@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Store } from "../utils/Store";
 
 export default function Layout({ title, children }) {
+  // eslint-disable-next-line no-unused-vars
   const { state, dispatch } = useContext(Store),
     { cart } = state;
 
