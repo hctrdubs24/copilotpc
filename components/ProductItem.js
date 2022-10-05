@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function ProductItem({ product }) {
   return (
-    <div className="card">
+    <div className="card shadow-lg">
       <Link href={`/product/${product.slug}`}>
         <a>
           <Image
