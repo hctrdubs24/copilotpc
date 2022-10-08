@@ -2,11 +2,17 @@ import Head from "next/head";
 import Link from "next/link";
 import { useContext } from "react";
 import { Store } from "../utils/Store";
+import { useState, useEffect } from "react";
 
 export default function Layout({ title, children }) {
   // eslint-disable-next-line no-unused-vars
   const { state, dispatch } = useContext(Store),
-    { cart } = state;
+    { cart } = state,
+    [cartItemsCount, setCartItemsCount] = useState(0);
+
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems]);
 
   return (
     <>
@@ -20,15 +26,17 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 items-center px-10 justify-between shadow-md bg-black text-slate-50 py-11">
             <Link href={"/"}>
-              <a className="text-4xl font-bold hover:underline underline-offset-8">Copilot PC</a>
+              <a className="text-4xl font-bold hover:underline underline-offset-8">
+                Copilot PC
+              </a>
             </Link>
             <div>
               <Link href={"/cart"}>
                 <a className="p-2">
                   Carrito
-                  {cart.cartItems.length > 0 && (
+                  {cartItemsCount > 0 && (
                     <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      {cartItemsCount}
                     </span>
                   )}
                 </a>
