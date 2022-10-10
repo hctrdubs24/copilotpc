@@ -98,7 +98,7 @@ function CartScreen() {
               </li>
               <li>
                 <button
-                  onClick={() => router.push("/shipping")}
+                  onClick={() => router.push("login?redirect=/shipping")}
                   className="primary-button w-full bg-teal-300 hover:bg-teal-400  active:bg-teal-500 rounded
                   py-2"
                 >

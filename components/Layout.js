@@ -1,18 +1,34 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useContext } from "react";
+import DropdownLink from "../components/DropdownLink";
+import { Menu } from "@headlessui/react";
 import { Store } from "../utils/Store";
+import { useSession, signOut } from "next-auth/react";
+import { useContext } from "react";
+import { ToastContainer } from "react-toastify";
 import { useState, useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 export default function Layout({ title, children }) {
-  // eslint-disable-next-line no-unused-vars
-  const { state, dispatch } = useContext(Store),
+  const { status, data: session } = useSession(),
+    { state, dispatch } = useContext(Store),
     { cart } = state,
     [cartItemsCount, setCartItemsCount] = useState(0);
 
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
+
+  const logoutClickHandler = () => {
+    Cookies.remove("cart");
+    dispatch({
+      type: "CART_RESET",
+    });
+    signOut({
+      callbackUrl: "/login",
+    });
+  };
 
   return (
     <>
@@ -21,6 +37,8 @@ export default function Layout({ title, children }) {
         <meta name="description" content="Copilot PC Web Site uwu" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <ToastContainer position="bottom-center" limit={1} />
 
       <section className="flex min-h-screen flex-col justify-between">
         <header>
@@ -41,9 +59,50 @@ export default function Layout({ title, children }) {
                   )}
                 </a>
               </Link>
-              <Link href={"/login"}>
-                <a className="p-2">Ingresar</a>
-              </Link>
+              {status === "loading" ? (
+                "Loading"
+              ) : session?.user ? (
+                <Menu as={"div"} className="relative z-10 inline-block ">
+                  <Menu.Button className={"text-teal-300"}>
+                    {session.user.name}
+                  </Menu.Button>
+                  <Menu.Items
+                    className={
+                      "absolute right-0 w-56 origin-top-right bg-slate-600 shadow-lg"
+                    }
+                  >
+                    <Menu.Item>
+                      <DropdownLink
+                        href={"/profile"}
+                        className="flex p-2 hover:bg-gray-200 hover:text-slate-500"
+                      >
+                        Perfil
+                      </DropdownLink>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <DropdownLink
+                        className="flex p-2 hover:bg-gray-200 hover:text-slate-500"
+                        href={"/profile"}
+                      >
+                        Historial de compras
+                      </DropdownLink>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <a
+                        href="#"
+                        className="flex p-2 hover:bg-gray-200 hover:text-slate-500"
+                        onClick={logoutClickHandler}
+                      >
+                        Logout
+                      </a>
+                    </Menu.Item>
+                  </Menu.Items>
+                </Menu>
+              ) : (
+                <Link href="/login">
+                  <a className="p-2">Login</a>
+                </Link>
+              )}
             </div>
           </nav>
         </header>
