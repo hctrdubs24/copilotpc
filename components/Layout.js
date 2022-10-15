@@ -82,7 +82,7 @@ export default function Layout({ title, children }) {
                     <Menu.Item>
                       <DropdownLink
                         className="flex p-2 hover:bg-gray-200 hover:text-slate-500"
-                        href={"/profile"}
+                        href={"/order-history"}
                       >
                         Historial de compras
                       </DropdownLink>

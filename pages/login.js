@@ -47,7 +47,7 @@ export default function LoginScreen() {
           <input
             type="email"
             {...register("email", {
-              required: "Por favor ingrese su correo",
+              required: "Por favor ingrese su email",
               pattern: {
                 value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
                 message: "Por favor ingrese un correo válido",
@@ -88,7 +88,9 @@ export default function LoginScreen() {
         <div className="mb-4 ">
           ¿Aún no tienes una cuenta?
           <div className="hover:underline underline-offset-8">
-            <Link href="register">¡Registrate aquí!</Link>
+            <Link href={`/register?redirect=${redirect || "/"}`}>
+              ¡Registrate aquí!
+            </Link>
           </div>
         </div>
       </form>

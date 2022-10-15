@@ -6,6 +6,8 @@ import { XCircleIcon } from "@heroicons/react/outline";
 import { Store } from "../utils/Store";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function CartScreen() {
   const router = useRouter(),
@@ -16,12 +18,21 @@ function CartScreen() {
     removeItemHandler = (item) => {
       dispatch({ type: "CART_REMOVE_ITEM", payload: item });
     },
-    updateCartHandler = (item, qty) => {
+    updateCartHandler = async (item, qty) => {
       const quantity = Number(qty);
+      const { data } = await axios.get(`/api/products/${item._id}`);
+
+      if (data.countInStock < quantity) {
+        return toast.error(
+          "Lo sentimos, este producto ya no se encuentra disponible por el momento"
+        );
+      }
+
       dispatch({
         type: "CART_ADD_ITEM",
         payload: { ...item, quantity },
       });
+      toast.success("Producto agregado al carrito");
     };
 
   return (

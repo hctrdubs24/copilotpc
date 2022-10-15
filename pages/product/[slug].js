@@ -3,30 +3,34 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import Layout from "../../components/Layout";
-import data from "../../utils/data";
 import { useContext } from "react";
 import { Store } from "../../utils/Store";
+import db from "../../utils/db";
+import Product from "../../models/Product";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-export default function ProductScreen() {
+export default function ProductScreen(props) {
+  const { product } = props;
   const { state, dispatch } = useContext(Store),
-    router = useRouter(),
-    { query } = useRouter(),
-    { slug } = query,
-    product = data.products.find((x) => x.slug === slug);
+    router = useRouter();
 
   if (!product) {
-    return <h1>Producto no encontrado</h1>;
+    return (
+      <Layout title={"Producto no encontrado"}>Producto no encontrado</Layout>
+    );
   }
 
-  const addToCartHandler = () => {
-    const existItem = state.cart.cartItems.find((x) => x.slug === slug),
+  const addToCartHandler = async () => {
+    const existItem = state.cart.cartItems.find((x) => x.slug === product.slug),
       quantity = existItem ? existItem.quantity + 1 : 1;
 
-    if (product.countInStock < quantity) {
-      alert(
+    const { data } = await axios.get(`/api/products/${product._id}`);
+
+    if (data.countInStock < quantity) {
+      return toast.error(
         "Lo sentimos, este producto ya no se encuentra disponible por el momento"
       );
-      return;
     }
 
     dispatch({
@@ -66,7 +70,7 @@ export default function ProductScreen() {
           </ul>
         </div>
         <div className="col-span-2 sm:col-span-1">
-          <div className="card p-5 rounded-md shadow-sm shadow-lg">
+          <div className="card p-5 rounded-md  shadow-lg">
             <div className="mb-2 flex justify-between">
               <div>Precio:</div>
               <div>${product.price}</div>
@@ -88,4 +92,18 @@ export default function ProductScreen() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context,
+    { slug } = params;
+
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: product ? db.convertDocToObj(product) : null,
+    },
+  };
 }
