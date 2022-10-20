@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 
 const handler = async (req, res) => {
   const session = await getSession({ req });
-  if (!session) return res.status(401).send("signin required");
+  if (!session) return res.status(401).send("Necesita iniciar sesión");
 
   await db.connect();
   const order = await Order.findById(req.query.id);

@@ -6,7 +6,7 @@ import Image from "next/image";
 // eslint-disable-next-line no-unused-vars
 export default function ProductItem({ product, addToCartHandler }) {
   return (
-    <div className="card shadow-lg">
+    <div className="mb-5  block   rounded-lg border border-gray-200  shadow-lg">
       <Link href={`/product/${product.slug}`}>
         <a>
           <Image
@@ -24,7 +24,7 @@ export default function ProductItem({ product, addToCartHandler }) {
           /> */}
         </a>
       </Link>
-      <div className="flex flex-col items-center justify-center p-5">
+      <div className="flex flex-col items-center justify-center p-5 mx-5">
         <Link href={`/product/${product.slug}`}>
           <a>
             <h2 className="text-lg">{product.name}</h2>
@@ -41,7 +41,7 @@ export default function ProductItem({ product, addToCartHandler }) {
         </button> */}
 
         <button
-          className="primary-button rounded-md bg-teal-300 py-2 px-4 shadow outline-none hover:bg-teal-400  active:bg-teal-500"
+          className="rounded-md bg-teal-300 py-2 px-4 shadow outline-none hover:bg-teal-400  active:bg-teal-500"
           type="button"
         >
           <Link href={`/product/${product.slug}`}>Ver detalles</Link>

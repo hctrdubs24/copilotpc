@@ -45,7 +45,7 @@ export default function ProductScreen(props) {
       <div className="py-2 mb-3 w-44 hover:underline underline-offset-8">
         <Link href="/">Menú principal</Link>
       </div>
-      <div className="grid md:grid-cols-5 md:gap-3">
+      <div className="grid lg:grid-cols-5 md:grid-cols-3 md:gap-3">
         <div className="md:col-span-2">
           <Image
             src={product.image}
@@ -56,21 +56,21 @@ export default function ProductScreen(props) {
             className="rounded-md"
           ></Image>
         </div>
-        <div>
-          <ul>
+        <div className="lg:col-span-1">
+          <ul className="">
             <li>
-              <h1 className="text-lg">{product.name}</h1>
+              <h1 className="text-4xl font-bold mb-4 pt-2">{product.name}</h1>
             </li>
-            <li>Categoria: {product.category}</li>
-            <li>Marcar: {product.brand}</li>
+            <li className="mb-1">Categoria: {product.category}</li>
+            <li className="mb-1">Marca: {product.brand}</li>
             {/* <li>
               {product.rating} of {product.numReviews} reviews
             </li> */}
-            <li>Descripción: {product.description}</li>
+            <li className="mb-1">Descripción: {product.description}</li>
           </ul>
         </div>
-        <div className="col-span-2 sm:col-span-1">
-          <div className="card p-5 rounded-md  shadow-lg">
+        <div className="lg:col-span-2 md:col-span-2 sm:col-span-1">
+          <div className="my-5 p-5  block   rounded-lg border border-gray-200 shadow-lg">
             <div className="mb-2 flex justify-between">
               <div>Precio:</div>
               <div>${product.price}</div>
@@ -82,7 +82,7 @@ export default function ProductScreen(props) {
               </div>
             </div>
             <button
-              className="primary-button rounded-md w-full bg-teal-400 py-2 border-end"
+              className="rounded-md bg-teal-300 py-2 px-4 shadow outline-none hover:bg-teal-400  active:bg-teal-500"
               onClick={addToCartHandler}
             >
               Agregar a carrito

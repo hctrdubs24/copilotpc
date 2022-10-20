@@ -40,9 +40,9 @@ export default function Layout({ title, children }) {
 
       <ToastContainer position="bottom-center" limit={1} />
 
-      <section className="flex min-h-screen flex-col justify-between">
+      <section className="flex min-h-screen flex-col justify-between min-w-max">
         <header>
-          <nav className="flex h-12 items-center px-10 justify-between shadow-md bg-black text-slate-50 py-11">
+          <nav className="flex h-12 items-center px-10 justify-between shadow-md bg-black text-slate-50 py-11 min-w-full">
             <Link href={"/"}>
               <a className="text-4xl font-bold hover:underline underline-offset-8">
                 Copilot PC
@@ -87,13 +87,23 @@ export default function Layout({ title, children }) {
                         Historial de compras
                       </DropdownLink>
                     </Menu.Item>
+                    {session.user.isAdmin && (
+                      <Menu.Item>
+                        <DropdownLink
+                          className="flex p-2 hover:bg-gray-200 hover:text-slate-500"
+                          href="/admin/dashboard"
+                        >
+                          Panel de administrador
+                        </DropdownLink>
+                      </Menu.Item>
+                    )}
                     <Menu.Item>
                       <a
                         href="#"
                         className="flex p-2 hover:bg-gray-200 hover:text-slate-500"
                         onClick={logoutClickHandler}
                       >
-                        Logout
+                        Cerrar sesión
                       </a>
                     </Menu.Item>
                   </Menu.Items>
@@ -106,7 +116,9 @@ export default function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-3 px-3">{children}</main>
+
+
+        <main className="container m-auto mt-3 px-6 pb-10">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
           Copilot PC &#169;
         </footer>
