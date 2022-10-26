@@ -42,12 +42,35 @@ export default function Layout({ title, children }) {
 
       <section className="flex min-h-screen flex-col justify-between min-w-max">
         <header>
-          <nav className="flex h-12 items-center px-10 justify-between shadow-md bg-black text-slate-50 py-11 min-w-full">
+          <nav className="flex h-12 items-center px-10 justify-around shadow-md bg-black text-slate-50 py-11 min-w-full">
             <Link href={"/"}>
               <a className="text-4xl font-bold hover:underline underline-offset-8">
                 Copilot PC
               </a>
             </Link>
+            <div className="flex justify-center">
+              <div className="mb-3 xl:w-96">
+                <div className="input-group relative flex flex-wrap items-stretch w-full mt-4">
+                  <form action="" className="flex flex-row">
+                    <input
+                      type="search"
+                      className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                      placeholder="Search"
+                      aria-label="Search"
+                      aria-describedby="button-addon3"
+                    />
+                    <button
+                      className="btn inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                      type="button"
+                      id="button-addon3"
+                    >
+                      Búscar
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
             <div>
               <Link href={"/cart"}>
                 <a className="p-2">
@@ -116,7 +139,6 @@ export default function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-
 
         <main className="container m-auto mt-3 px-6 pb-10">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
