@@ -24,6 +24,10 @@ ChartJS.register(
   Legend
 );
 
+ChartJS.defaults.font = {
+  family: "Segoe UI",
+};
+
 export const options = {
   responsive: true,
   plugins: {
@@ -76,7 +80,7 @@ function AdminDashboardScreen() {
       },
     ],
   };
-  
+
   return (
     <Layout title="Panel de administrador">
       <div className="grid lg:grid-cols-4 md:grid-cols-3 md:gap-5 sm:grid-cols-1">
@@ -139,7 +143,7 @@ function AdminDashboardScreen() {
                 </div>
               </div>
               <h2 className="text-xl">Reporte de ventas</h2>
-              <Bar 
+              <Bar
                 options={{
                   legend: { display: true, position: "right" },
                 }}

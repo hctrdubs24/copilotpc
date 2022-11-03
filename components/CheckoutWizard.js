@@ -7,7 +7,7 @@ export default function CheckoutWizard({ activeStep = 0 }) {
         "Inicio de sesión",
         "Dirección de envío",
         "Método de pago",
-        "Ordenar",
+        "Realizar pedido",
       ].map((step, index) => (
         <div
           key={step}
