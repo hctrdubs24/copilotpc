@@ -21,9 +21,11 @@ export default function Search(props) {
     category = "All",
     brand = "All",
     price = "All",
+    // eslint-disable-next-line no-unused-vars
     sort = "featured",
   } = router.query;
 
+  // eslint-disable-next-line no-unused-vars
   const { products, countProducts, categories, brands, pages } = props;
 
   const filterSearch = ({
