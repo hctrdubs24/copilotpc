@@ -2,12 +2,12 @@ import React from "react";
 
 export default function CheckoutWizard({ activeStep = 0 }) {
   return (
-    <div className="mb-5 flex flex-wrap">
+    <div className="mb-2 flex flex-wrap">
       {[
         "Inicio de sesión",
         "Dirección de envío",
         "Método de pago",
-        "Realizar pedido",
+        "Resumen del pedido",
       ].map((step, index) => (
         <div
           key={step}

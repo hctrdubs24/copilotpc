@@ -52,10 +52,10 @@ export default function AdminOrderScreen() {
             <li className="font-bold hover:underline hover:underline-offset-4">
               <Link href="/admin/orders">Pedidos</Link>
             </li>
-            <li className="hover:underline hover:underline-offset-4">
+            <li className="w-fit hover:underline hover:underline-offset-4">
               <Link href="/admin/products">Productos</Link>
             </li>
-            <li className="hover:underline hover:underline-offset-4">
+            <li className="w-fit hover:underline hover:underline-offset-4">
               <Link href="/admin/users">Usuarios</Link>
             </li>
           </ul>

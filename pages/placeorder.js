@@ -21,7 +21,7 @@ export default function PlaceOrderScreen() {
   ); // 123.4567 => 123.46
 
   const shippingPrice = itemsPrice > 200 ? 0 : 15,
-    taxPrice = round2(itemsPrice * 0.15),
+    taxPrice = round2(itemsPrice * 0.1),
     totalPrice = round2(itemsPrice + shippingPrice + taxPrice),
     router = useRouter();
 
@@ -64,7 +64,7 @@ export default function PlaceOrderScreen() {
   return (
     <Layout title="Realizar pedido">
       <CheckoutWizard activeStep={3} />
-      <h1 className="mb-4 text-xl">Realizar pedido</h1>
+      {/* <h1 className="mb-4 text-xl">Realizar pedido</h1> */}
       {cartItems.length === 0 ? (
         <>
           <h3>El carrito está vacio 😥</h3>
@@ -73,9 +73,9 @@ export default function PlaceOrderScreen() {
           </h2>
         </>
       ) : (
-        <div className="grid md:grid-cols-4 md:gap-5">
+        <div className="grid md:grid-cols-4 md:gap-5 mt-5">
           <div className="overflow-x-auto md:col-span-3">
-            <div className="mb-5  block   rounded-lg border border-gray-200  shadow-md  p-5">
+            <div className="mb-3  block   rounded-lg border border-gray-200  shadow-md  p-5">
               <h2 className="mb-2 text-lg">Dirección de envío</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{" "}
@@ -137,7 +137,7 @@ export default function PlaceOrderScreen() {
           </div>
           <div>
             <div className="card p-5">
-              <h2 className="mb-2 text-lg">Resumen del pedido</h2>
+              <h2 className="mb-2 font-bold text-lg">Resumen del pedido</h2>
               <ul>
                 <li>
                   <div className="mb-2 flex justify-between">

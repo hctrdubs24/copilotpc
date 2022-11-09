@@ -41,7 +41,7 @@ export default function LoginScreen() {
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="mb-4 text-xl">Login</h1>
+        <h1 className="mb-4 text-6xl">Inicio de sesión </h1>
         <div className="mb-4">
           <label htmlFor="email">Email</label>
           <input
@@ -87,7 +87,7 @@ export default function LoginScreen() {
         </div>
         <div className="mb-4 ">
           ¿Aún no tienes una cuenta?
-          <div className="hover:underline underline-offset-8">
+          <div className="w-fit hover:underline underline-offset-8">
             <Link href={`/register?redirect=${redirect || "/"}`}>
               ¡Registrate aquí!
             </Link>
