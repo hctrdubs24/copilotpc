@@ -1,4 +1,13 @@
 import { XCircleIcon } from "@heroicons/react/outline";
+import {
+  Grid,
+  List,
+  ListItem,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -11,20 +20,33 @@ import { Store } from "../utils/Store";
 
 const PAGE_SIZE = 12;
 
+const prices = [
+  {
+    name: "$1.00 a $50.00",
+    value: "1-50",
+  },
+  {
+    name: "$51.00 a $200.00",
+    value: "51-200",
+  },
+  {
+    name: "$201.00 a $1000.00",
+    value: "201-1000",
+  },
+];
+
 export default function Search(props) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
   const router = useRouter();
   const {
-    query = "All",
-    category = "All",
-    brand = "All",
-    price = "All",
-    // eslint-disable-next-line no-unused-vars
+    query = "all",
+    category = "all",
+    brand = "all",
+    price = "all",
     sort = "featured",
   } = router.query;
-
   // eslint-disable-next-line no-unused-vars
   const { products, countProducts, categories, brands, pages } = props;
 
@@ -40,14 +62,15 @@ export default function Search(props) {
   }) => {
     const path = router.pathname;
     const { query } = router;
-    if (page) router.query = page;
-    if (searchQuery) router.searchQuery = searchQuery;
-    if (sort) router.sort = sort;
-    if (category) router.category = category;
-    if (brand) router.brand = brand;
-    if (price) router.price = price;
+    if (page) query.page = page;
+    if (searchQuery) query.searchQuery = searchQuery;
+    if (sort) query.sort = sort;
+    if (category) query.category = category;
+    if (brand) query.brand = brand;
+    if (price) query.price = price;
     if (min) query.min ? query.min : query.min === 0 ? 0 : min;
     if (max) query.max ? query.max : query.max === 0 ? 0 : max;
+
     router.push({
       pathname: path,
       query: query,
@@ -56,6 +79,19 @@ export default function Search(props) {
 
   const categoryHandler = (e) => {
     filterSearch({ category: e.target.value });
+  };
+  // eslint-disable-next-line no-unused-vars
+  const pageHandler = (e, page) => {
+    filterSearch({ page });
+  };
+  const brandHandler = (e) => {
+    filterSearch({ brand: e.target.value });
+  };
+  const sortHandler = (e) => {
+    filterSearch({ sort: e.target.value });
+  };
+  const priceHandler = (e) => {
+    filterSearch({ price: e.target.value });
   };
 
   const addToCartHandler = async (product) => {
@@ -76,37 +112,90 @@ export default function Search(props) {
   return (
     <>
       <Layout title={"Búsqueda"}>
-        <div className="grid gap-4 md:grid-cols-3 sm:grid-cols-1">
-          <section className="col-start-2 col-span-2">
-            {products.length === 0 ? "No" : countProducts} Resultados
-            {query !== "All" && query !== "" && " : " + query}
-            {category !== "All" && " : " + category}
-            {price !== "All" && " Precio : " + price}
-            {brand !== "All" && " : " + brand}{" "}
-            {(query !== "All" && query !== "") ||
-            category !== "All" ||
-            price !== "All" ||
-            brand !== "All" ? (
-              <button className="align-middle" onClick={() => router.push("/search")}>
+        <div className="grid gap-4 md:grid-cols-4 sm:grid-cols-1">
+          <section className="col-start-2 col-span-3">
+            {products.length === 0 ? "No" : countProducts} resultados
+            {query !== "all" && query !== "" && " : " + query}
+            {category !== "all" && " : " + category}
+            {brand !== "all" && " : " + brand}
+            {price !== "all" && " : Price " + price}
+            {(query !== "all" && query !== "") ||
+            category !== "all" ||
+            brand !== "all" ||
+            price !== "all" ? (
+              <button
+                className="align-middle"
+                onClick={() => router.push("/search")}
+              >
                 <XCircleIcon className="h-5 w-5"></XCircleIcon>
               </button>
             ) : null}
           </section>
-          <section className="col-span-1">
-            <label htmlFor="category">
-              Categorias
-              <select value={category} onChange={categoryHandler}>
-                <option value="All">Todos los productos</option>
-                {categories &&
-                  categories.map((category) => (
-                    <option value={category} key={category}>
-                      {category}
-                    </option>
-                  ))}
-              </select>
-            </label>
+
+          <section className="flex flex-col gap-3">
+            <Grid item md={1}>
+              <List>
+                <ListItem>
+                  <Box className={"w-full"}>
+                    <Typography>Categorias</Typography>
+                    <Select
+                      fullWidth
+                      value={category}
+                      onChange={categoryHandler}
+                    >
+                      <MenuItem value="all">Todas las categorias</MenuItem>
+                      {categories &&
+                        categories.map((category) => (
+                          <MenuItem key={category} value={category}>
+                            {category}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </Box>
+                </ListItem>
+                <ListItem>
+                  <Box className={"w-full"}>
+                    <Typography>Marcas</Typography>
+                    <Select value={brand} onChange={brandHandler} fullWidth>
+                      <MenuItem value="all">Todas las marcas</MenuItem>
+                      {brands &&
+                        brands.map((brand) => (
+                          <MenuItem key={brand} value={brand}>
+                            {brand}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </Box>
+                </ListItem>
+                <ListItem>
+                  <Box className={"w-full"}>
+                    <Typography>Precios</Typography>
+                    <Select value={price} onChange={priceHandler} fullWidth>
+                      <MenuItem value="all">Todos los precios</MenuItem>
+                      {prices.map((price) => (
+                        <MenuItem key={price.value} value={price.value}>
+                          {price.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
+                </ListItem>
+                <ListItem>
+                  <Box className={"w-full"}>
+                    <Typography>Ordenar por: </Typography>
+                    <Select value={sort} onChange={sortHandler} fullWidth>
+                      <MenuItem value="featured">Populares</MenuItem>
+                      <MenuItem value="lowest">Precio: Menor a Mayor</MenuItem>
+                      <MenuItem value="highest">Precio: Mayor a Menor</MenuItem>
+                      <MenuItem value="newest">Nuevos productos</MenuItem>
+                    </Select>
+                  </Box>
+                </ListItem>
+              </List>
+            </Grid>
           </section>
-          <section className="col-span-2">
+
+          <section className="col-span-3">
             <div className="grid gap-4 md:grid-cols-3 sm:grid-cols-2">
               {products.map((product) => (
                 <ProductItem
@@ -125,16 +214,16 @@ export default function Search(props) {
 
 export async function getServerSideProps({ query }) {
   await db.connect();
-  const pageSize = query.pageSize || PAGE_SIZE,
-    page = query.page || 1,
-    category = query.category || "",
-    brand = query.brand || "",
-    price = query.price || "",
-    sort = query.sort || "",
-    searchQuery = query.query || "";
+  const pageSize = query.pageSize || PAGE_SIZE;
+  const page = query.page || 1;
+  const category = query.category || "";
+  const brand = query.brand || "";
+  const price = query.price || "";
+  const sort = query.sort || "";
+  const searchQuery = query.query || "";
 
   const queryFilter =
-    searchQuery && searchQuery !== "All"
+    searchQuery && searchQuery !== "all"
       ? {
           name: {
             $regex: searchQuery,
@@ -142,44 +231,46 @@ export async function getServerSideProps({ query }) {
           },
         }
       : {};
+  const categoryFilter = category && category !== "all" ? { category } : {};
+  const brandFilter = brand && brand !== "all" ? { brand } : {};
+  const priceFilter =
+    price && price !== "all"
+      ? {
+          price: {
+            $gte: Number(price.split("-")[0]),
+            $lte: Number(price.split("-")[1]),
+          },
+        }
+      : {};
 
-  const categoryFilter = category && category !== "All" ? { category } : {},
-    brandFilter = brand && brand !== "All" ? { brand } : {},
-    priceFilter =
-      price && price !== "All"
-        ? {
-            price: {
-              $gte: Number(price.split("-")[0]),
-              $lte: Number(price.split("-")[1]),
-            },
-          }
-        : {},
-    order =
-      sort === "featured"
-        ? { featured: -1 }
-        : sort === "lowest"
-        ? { price: 1 }
-        : sort === "highest"
-        ? { price: -1 }
-        : sort === "newest"
-        ? { createdAt: -1 }
-        : { _id: -1 };
+  const order =
+    sort === "featured"
+      ? { featured: -1 }
+      : sort === "lowest"
+      ? { price: 1 }
+      : sort === "highest"
+      ? { price: -1 }
+      : sort === "toprated"
+      ? { rating: -1 }
+      : sort === "newest"
+      ? { createdAt: -1 }
+      : { _id: -1 };
 
-  const categories = await Product.find().distinct("category"),
-    brands = await Product.find().distinct("brand"),
-    productDocs = await Product.find(
-      {
-        ...queryFilter,
-        ...categoryFilter,
-        ...priceFilter,
-        ...brandFilter,
-      },
-      "-reviews"
-    )
-      .sort(order)
-      .skip(pageSize * (page - 1))
-      .limit(pageSize)
-      .lean();
+  const categories = await Product.find().distinct("category");
+  const brands = await Product.find().distinct("brand");
+  const productDocs = await Product.find(
+    {
+      ...queryFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...brandFilter,
+    },
+    "-reviews"
+  )
+    .sort(order)
+    .skip(pageSize * (page - 1))
+    .limit(pageSize)
+    .lean();
 
   const countProducts = await Product.countDocuments({
     ...queryFilter,
@@ -187,8 +278,7 @@ export async function getServerSideProps({ query }) {
     ...priceFilter,
     ...brandFilter,
   });
-
-  await db.connect();
+  await db.disconnect();
 
   const products = productDocs.map(db.convertDocToObj);
 

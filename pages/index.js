@@ -30,10 +30,7 @@ export default function Home({ products }) {
     <>
       <Layout title={"Home"}>
         <div className="grid gap-2 grid-cols-6">
-          <div className="col-sapn-1">
-
-          </div>
-          <div className="col-span-5 grid gap-4 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2">
+          <div className="col-span-6 grid gap-4 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2">
             {products.map((product) => (
               <ProductItem
                 product={product}

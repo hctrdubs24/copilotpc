@@ -4,12 +4,24 @@ import DropdownLink from "../components/DropdownLink";
 import { Menu } from "@headlessui/react";
 import { Store } from "../utils/Store";
 import { useSession, signOut } from "next-auth/react";
-import { useContext } from "react";
 import { ToastContainer } from "react-toastify";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import {
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import CancelIcon from "@mui/icons-material/Cancel";
+import axios from "axios";
 
 export default function Layout({ title, children }) {
   const router = useRouter();
@@ -29,7 +41,29 @@ export default function Layout({ title, children }) {
     router.push(`/search?query=${query}`);
   };
 
+  const [sidbarVisible, setSidebarVisible] = useState(false);
+  const sidebarOpenHandler = () => {
+    setSidebarVisible(true);
+  };
+  const sidebarCloseHandler = () => {
+    setSidebarVisible(false);
+  };
+
+  const [categories, setCategories] = useState([]);
+  // const { enqueueSnackbar } = useSnackbar();
+
+  const fetchCategories = async () => {
+    try {
+      const { data } = await axios.get(`/api/products/categories`);
+      setCategories(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
+    fetchCategories();
+    
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
 
@@ -56,6 +90,56 @@ export default function Layout({ title, children }) {
       <section className="flex min-h-screen flex-col justify-between min-w-max">
         <header>
           <nav className="flex h-12 items-center px-10 justify-around shadow-md bg-black text-slate-50 py-11 min-w-full ">
+            <Box display="flex" alignItems="center">
+              <IconButton
+                edge="start"
+                aria-label="open drawer"
+                className={"p-0 text-gray-100"}
+                onClick={sidebarOpenHandler}
+              >
+                <MenuIcon className={"transform"} />
+              </IconButton>
+            </Box>
+            <Drawer
+              anchor="left"
+              open={sidbarVisible}
+              onClose={sidebarCloseHandler}
+            >
+              <List>
+                <ListItem>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Typography>Comprar por categoría</Typography>
+                    <IconButton
+                      aria-label="close"
+                      onClick={sidebarCloseHandler}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  </Box>
+                </ListItem>
+                <Divider light />
+                {categories.map((category) => (
+                  <Link
+                    key={category}
+                    href={`/search?category=${category}`}
+                    passHref
+                  >
+                    <ListItem
+                      button
+                      component="a"
+                      onClick={sidebarCloseHandler}
+                    >
+                      <ListItemText primary={category}></ListItemText>
+                    </ListItem>
+                  </Link>
+                ))}
+              </List>
+            </Drawer>
+
             <Link href={"/"}>
               <a className="text-4xl font-bold hover:underline underline-offset-8">
                 Copilot PC
