@@ -63,7 +63,7 @@ export default function Layout({ title, children }) {
 
   useEffect(() => {
     fetchCategories();
-    
+
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
 
@@ -92,6 +92,7 @@ export default function Layout({ title, children }) {
           <nav className="flex h-12 items-center px-10 justify-around shadow-md bg-black text-slate-50 py-11 min-w-full ">
             <Box display="flex" alignItems="center">
               <IconButton
+                style={{ color: "white" }}
                 edge="start"
                 aria-label="open drawer"
                 className={"p-0 text-gray-100"}

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@headlessui/react": "^1.6.2",
@@ -21,16 +22,19 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.8.0",
     "cloudinary": "^1.30.0",
+    "emailjs-com": "^3.2.0",
     "js-cookie": "^3.0.1",
     "mongoose": "^6.3.4",
     "next": "12.3.1",
     "next-auth": "^4.12.3",
     "next-connect": "^0.13.0",
+    "nodemailer-react": "^1.0.2",
     "react": "18.2.0",
     "react-chartjs-2": "^4.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.37.0",
-    "react-toastify": "^9.0.8"
+    "react-toastify": "^9.0.8",
+    "save": "^2.9.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.21",

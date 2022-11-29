@@ -33,6 +33,12 @@ export default function LoginScreen() {
         password,
       });
 
+      const ahhh = await axios.post(
+        "https://node-mailer-six.vercel.app/email",
+        { email: email }
+      );
+      console.log(ahhh);
+
       const result = await signIn("credentials", {
         redirect: false,
         email,
@@ -45,6 +51,23 @@ export default function LoginScreen() {
       toast.error(getError(err));
     }
   };
+
+  // const sendEmail = async (e) => {
+  //   // e.preventDefault();
+  //   // console.log(e);
+  //   console.log("hola");
+  //   try {
+  //     const email = e.target.email.value;
+  //     const result = await axios.post(
+  //       "https://node-mailer-six.vercel.app/email",
+  //       { email: email }
+  //     );
+  //     console.log(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   return (
     <Layout title="Crear cuenta">
       <form
@@ -132,7 +155,10 @@ export default function LoginScreen() {
         </div>
 
         <div className="mb-4 ">
-          <button className="rounded py-2 px-4 shadow-lg outline-none bg-teal-300 hover:bg-teal-400  active:bg-teal-500">
+          <button
+            // onSubmit={(e) => sendEmail(e)}
+            className="rounded py-2 px-4 shadow-lg outline-none bg-teal-300 hover:bg-teal-400  active:bg-teal-500"
+          >
             Registrar
           </button>
         </div>
@@ -141,6 +167,17 @@ export default function LoginScreen() {
           <Link href={`/register?redirect=${redirect || "/"}`}>Register</Link> */}
         </div>
       </form>
+      {/* // eslint-disable-next-line @next/next/no-sync-scripts
+      <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+      ></script>
+      
+      <script>
+      emailjs.init("JPSxm6eCN2FuF2qVU") 
+      
+      </script>
+      */}
     </Layout>
   );
 }
