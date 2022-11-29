@@ -8,6 +8,8 @@ import { useEffect, useReducer } from "react";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+// import User from "../../models/User";
+// import db from "../../utils/db";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -141,6 +143,7 @@ function OrderScreen() {
         );
         dispatch({ type: "PAY_SUCCESS", payload: data });
         toast.success("El pedido se ha pago correctamente");
+        senConfirmationEmail();
       } catch (err) {
         dispatch({ type: "PAY_FAIL", payload: getError(err) });
         toast.error(getError(err));
@@ -161,11 +164,25 @@ function OrderScreen() {
       );
       dispatch({ type: "DELIVER_SUCCESS", payload: data });
       toast.success("El pedido ha sido enviado");
+      // aquí
     } catch (err) {
       dispatch({ type: "DELIVER_FAIL", payload: getError(err) });
       toast.error(getError(err));
     }
   }
+
+  const senConfirmationEmail = async () => {
+    const orderDataEmail = {
+      order: order,
+      email: session.user.email,
+      orderId: orderId,
+    };
+    console.log(orderDataEmail);
+    await axios.post(
+      "https://node-mailer-six.vercel.app/orderd",
+      orderDataEmail
+    );
+  };
 
   return (
     <Layout title={`Pedido ${orderId}`}>
@@ -311,6 +328,7 @@ function OrderScreen() {
               </ul>
             </div>
           </div>
+          <button onClick={() => senConfirmationEmail()}>test</button>
         </div>
       )}
     </Layout>

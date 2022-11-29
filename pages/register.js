@@ -52,22 +52,6 @@ export default function LoginScreen() {
     }
   };
 
-  // const sendEmail = async (e) => {
-  //   // e.preventDefault();
-  //   // console.log(e);
-  //   console.log("hola");
-  //   try {
-  //     const email = e.target.email.value;
-  //     const result = await axios.post(
-  //       "https://node-mailer-six.vercel.app/email",
-  //       { email: email }
-  //     );
-  //     console.log(result);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   return (
     <Layout title="Crear cuenta">
       <form
