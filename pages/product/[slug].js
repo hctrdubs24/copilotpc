@@ -46,18 +46,19 @@ export default function ProductScreen(props) {
         <Link href="/">Menú principal</Link>
       </div>
       <div className="grid lg:grid-cols-5 md:grid-cols-3 md:gap-3">
-        <div className="md:col-span-2">
+        <div className="md:col-span-1">
           <Image
             src={product.image}
             alt={product.name}
-            width={640}
-            height={640}
+            width={140}
+            height={140}
             layout="responsive"
             className="rounded-md"
+           
           ></Image>
         </div>
-        <div className="lg:col-span-1">
-          <ul className="">
+        <div className="lg:col-span-2" style={{maxHeight: '150px'}}>
+          <ul className="rounded-lg border border-gray-200 shadow-lg my-5 p-5">
             <li>
               <h1 className="text-4xl font-bold mb-4 pt-2">{product.name}</h1>
             </li>
