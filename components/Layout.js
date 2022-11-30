@@ -22,6 +22,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import CancelIcon from "@mui/icons-material/Cancel";
 import axios from "axios";
+import { Facebook, Twitter } from "react-bootstrap-icons";
 
 export default function Layout({ title, children }) {
   const router = useRouter();
@@ -246,6 +247,29 @@ export default function Layout({ title, children }) {
         <main className="container m-auto mt-3 px-6 pb-10">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
           Copilot PC &#169;
+        </footer>
+        <footer className="flex h-10 justify-center items-center">
+          <div className="mt-12 p-10">
+            <h6>Redes sociales</h6>
+            <div className="content-center">
+              <a
+                href="https://www.facebook.com/profile.php?id=100088158766939"
+                target={"_blank"}
+                className={"flex text-lg"}
+                rel="noreferrer"
+              >
+                <Facebook className="mt-1 mr-2" /> Facebook
+              </a>
+              <a
+                href="https://twitter.com/CopilotPc1"
+                target={"_blank"}
+                className={"flex text-lg"}
+                rel="noreferrer"
+              >
+                <Twitter className="mt-1 mr-2" /> Twitter
+              </a>
+            </div>
+          </div>
         </footer>
       </section>
     </>
