@@ -165,7 +165,7 @@ export default function AdminProductEditScreen() {
               className="mx-auto max-w-screen-md"
               onSubmit={handleSubmit(submitHandler)}
             >
-              <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
+              <h1 className="mb-4 text-xl">{`Editar Producto ${productId}`}</h1>
               <div className="mb-4">
                 <label htmlFor="name">Nombre</label>
                 <input
